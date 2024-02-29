@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+
+    {% for msg in messages %}
+      <p>{{msg}}</p>
+    {% endfor %}
+
+  {% endif %}
+
+{% endwith %}
+
+
+{% block body %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-warning" role="alert">
+         {{msg}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  
+  <form action="/admin/publisher" method = "post" class ="w-50 mx-auto">
+    {{ form.hidden_tag() }}
+    
+       
+    <div class="form-group">
+      {{form.name.label}}
+      {{ form.name(class="form-control") }}
+      
+    </div>
+    <br>
+    
+    <div class="form-group">
+      {{ form.submit(class ='btn btn-primary form-control w-25') }}
+    </div>  
+    
+  </form>
+
+{% endblock body %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+
+
+{% block body %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-warning" role="alert">
+          {{msg}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+ 
+  <br>
+  <div class="row"> 
+    {% for bk in books %}
+             
+      <div class="col-sm-3"> 
+        <div class="card h-100 b-0" style="width: 18rem;">          
+          <img class="card-img-top h-50" src="{{url_for('static',filename='images/')}}{{bk.image}}" alt="./static/pic_lookup/1.svg">
+          <div class="card-body">
+            <h6 class="h6 small">Title: {{bk.title.title()}}</h6>
+            <h6 class="h6 small">Author: {{bk.author.title()}}</h6> 
+            <button class="btn btn-info"><a href="">Details</a></button>
+          </div>
+          
+        </div>
+      </div>
+      <br>
+    {% endfor %}  
+    <br>
+  </div>
+  <br>
+  
+  
+
+{% endblock body %}

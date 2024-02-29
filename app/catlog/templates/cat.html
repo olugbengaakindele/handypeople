@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width={device-width}, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for x in books %}
+      <img src="{{url_for('static', filename = 'images/' + x.image) }}" alt="book-img" height ="120" width = "100">
+      <h5>{{x.image}}</h5>
+      <h5>{{x.title}}</h5>  
+
+    {% endfor %}
+</body>
+</html>

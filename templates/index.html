@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for ('static', filename= 'css/styles.css') }}">
+</head>
+<body>
+    <h2>Path to css : {{ url_for ('static', filename= 'css/styles.css') }} </h2>
+    <ul>
+        {% for m in movies %}
+            <li>{{ m }} </li>
+
+        {% endfor %}
+    </ul>
+
+    <table>
+        <tr>
+            <th>Movie Title</th>
+            <th>Movie Lenght</th>
+            <th>Movie Category</th>
+        </tr>
+
+        {% for x, y in dict_movie.items() %}
+            <tr>
+
+                <td>{{ x }}</td>
+                <td>{{ y }}</td>
+                {% if y > 3 %}
+                    <td>Long</td>
+                {% else %}
+                    <td>Long</td>
+                {% endif %}
+                
+            </tr>    
+        {% endfor %}         
+
+    </table>
+</body>
+</html>
