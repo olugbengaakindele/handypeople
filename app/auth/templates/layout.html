@@ -35,10 +35,8 @@
 
                         {% if current_user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="">Hi {{ current_user.name.title() }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a></li>
-
-                           
-
+                            <li class="nav-item"><a class="nav-link" href="{{url_for('auth.setting')}}">Setting</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a></li>                          
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{{url_for('auth.register')}}">Register</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{url_for('auth.do_the_login')}}">Login</a></li>

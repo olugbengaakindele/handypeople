@@ -2,6 +2,7 @@ from app import db,bcrypt
 from datetime import datetime as dt
 from app import login_manager
 from flask_login import UserMixin
+import os
 
 
 class Users(UserMixin, db.Model):
@@ -10,14 +11,27 @@ class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(80), nullable = False)
     email = db.Column(db.String(80), nullable = False)
-    password = db.Column(db.String(100), nullable = False)
+    password = db.Column(db.String(200), nullable = False)
     date_of_reg = db.Column(db.DateTime, default = dt.utcnow())
     email_confirm = db.Column(db.Boolean, default = False)
+    code_sent =db.Column(db.String(200))
+    code_validate = db.Column(db.String(200), default= 'X')
+
+    def __init__(self, name, email,password,code_sent):
+        self.name = name
+        self.password = password
+        self.email = email
+        self.code_sent = code_sent
+
+
+    def __repr__(self):
+        return f'You have created an accocunt'
 
     @classmethod
-    def create_user(cls,user_name, user_email, user_password):
-        user = cls(name = user_name, email= user_email.lower(), password = bcrypt.generate_password_hash(user_password).decode('utf-8'))
-        
+    def create_user(cls,user_name, user_email, user_password,code_sent):
+        user = cls(name = user_name, email= user_email.lower()
+                    , password = bcrypt.generate_password_hash(user_password).decode('utf-8')
+                    ,code_sent= bcrypt.generate_password_hash(code_sent).decode('utf-8'))
         db.session.add(user)
         db.session.commit()
 
@@ -46,14 +60,34 @@ class Profiles(UserMixin, db.Model):
     userd_id = db.Column(db.Integer, db.ForeignKey('tbl_users.id'))
 
     @classmethod
-    def
+    def create_profile(cls, pri_trade,abt_me, profile_picture ,sex, biz_name, f_name,l_name, prov, city, str_add,
+                       ps_code, em_add, ph_num1,ph_num2,biz_lic_num, more_notes,user_id):
+        
+        user_profile = cls(
+                            primary_trade = pri_trade,
+                            about_me = abt_me,
+                            profile_picture = profile_picture ,
+                            sex = sex, 
+                            business_name = biz_name, 
+                            first_name = f_name,
+                            last_name = l_name, 
+                            province = prov, 
+                            city =city, 
+                            street_address = str_add,
+                            paostal_code = ps_code, 
+                            emial_address = em_add, 
+                            phone_number_1 =ph_num1,
+                            phone_number_2 = ph_num2,
+                            business_license_number= biz_lic_num, 
+                            more_notes_about_me = more_notes,
+                            user_id = user_id
 
+        )
 
+        db.session.add(user_profile)
+        db.session.commit()
 
-
-
-
-
+        return user_profile
 
 
     @classmethod
@@ -66,10 +100,6 @@ class Profiles(UserMixin, db.Model):
         return user
 
 
-
-
-
-    
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(int(id))

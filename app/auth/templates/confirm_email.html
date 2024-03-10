@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+
+
+{% block body %}
+
+  <form action="{{url_for('auth.confirm_email')}}" method = "post" class ="w-50 mx-auto">
+    {{ form.hidden_tag() }}
+    
+    {% for err in  form.code.errors %} 
+        <h6 class="text-danger">{{ err }}</h6>
+    {% endfor %}
+         
+    <div class="form-group">
+      {{form.code.label}}
+      {{ form.code(class="form-control") }}
+      
+    </div>
+    <br>
+    <div class="form-group">
+      {{ form.submit(class ='btn btn-primary form-control w-25') }}
+    </div>  
+    
+    
+  </form>
+
+{% endblock body %}

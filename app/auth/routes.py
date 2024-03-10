@@ -2,11 +2,18 @@
 from app.auth.forms import *
 from app.auth import auth
 from flask import render_template, request, flash, redirect, url_for
-from app.auth.models import Users
+from app.auth.models import Users,Profiles
 from app.catlog.models import Books
 from app.catlog.models import Publication
-from app import bcrypt
+from app import bcrypt, sr
 from flask_login import  login_user, logout_user,login_required, current_user
+from flask_mail import  Message
+from app import mail
+from flask import current_app  as app
+from itsdangerous import URLSafeTimedSerializer
+import os
+from app.auth.bespokeFunc import *
+
 
 
 #  Home page
@@ -20,9 +27,7 @@ def home():
 # registration page
 @auth.route("/register", methods= ['GET','POST'])
 def register():
-    if current_user.is_authenticated:
-        flash("You are already logged in")
-        return redirect(url_for("auth.home"))
+    
     name = None
     email = None
     form = RegistrationForm()
@@ -31,19 +36,35 @@ def register():
         name = form.name.data
         email = form.email.data
         password = form.password.data
-        Users.create_user( name ,email,  password )
-        flash("You have successfully created an account with us", "info")
+        code_sent = get_random_string(5)
+        Users.create_user( name ,email,  password, code_sent,)
+
+        # generate token to send to email
+        # sr = URLSafeTimedSerializer(os.environ['e_data_password'])
+        # token = sr.dumps(email , salt = 'email_confirm')
+        # msg = Message('Confirm Email' , sender = app.config['MAIL_USERNAME'], recipients=[email])
+        # link = url_for('auth.confirm_email', token = token, external= True)
+        # msg.body = 'Your links is {}'.format(link)
+        # mail.send(msg)
+        # sendEmail(email, code_sent)
+        
+
+        flash("An email has been sent to you , please confirm by clicking on the link.", "info")
         return redirect(url_for("auth.do_the_login"))
     
     return render_template("reg.html", form = form , name = name , email = email , title ="Register")
 
 
+# @auth.route("/confirm_email/<token>")
+# def confirm_email(token):
+#     email = sr.loads(token, salt = 'email_confirm', max_age = 10)
+
+#     return f"Yur link is ready"
+    
+
 @auth.route("/login", methods= ['GET','POST'])
 def do_the_login():
-    if current_user.is_authenticated:
-        flash("You are already logged in")
-        return redirect(url_for("auth.home"))
-     
+    
     name = None
     email = None
     form = LoginForm()
@@ -56,40 +77,42 @@ def do_the_login():
         if not (user and bcrypt.check_password_hash(user.password, passwd) ):
        
             flash("Invalid credentials, please try again")
-            return redirect(url_for("auth.do_the_login"))
 
-        login_user(user,form.stayloggedin.data )
-        return redirect(url_for("auth.home"))
+            return redirect(url_for("auth.do_the_login"))
+        
+        # elif user and bcrypt.check_password_hash(user.password, passwd) and user.email_confirm == False:
+        #     flash("Enter the code sent to your email")
+        #     return redirect(url_for("auth.confirm_email"),user_email=user_email)
+
+        else:
+            login_user(user,form.stayloggedin.data )
+            return redirect(url_for("auth.home"))
     
 
     return render_template("login.html", form = form , name = name , email = email)
 
 
-@auth.route("/admin/publisher", methods= ['GET','POST'])
-@login_required
-def admin_publisher():
-    form = PublisherForm()
-    if form.validate_on_submit():
-        name = request.form["name"]
-        user = Publication.create_publisher(name)
-        flash("You have created a publisher")
-        return redirect(url_for("auth.admin_publisher"))
+# @auth.route("/confirm_email", methods= ['GET','POST'])
+# def confirm_email():
+#     form = VerifyEmailForm()
+# #     user = Users.query.filter_by(email = email).first()
+# #     if form.validate_on_submit():
+# #         email_code = request.form['code']
+# #     #    if   bcrypt.check_password_hash(user.code_sent , user.code_validate)
 
-    return render_template("publisher_add.html" , form = form)
+# #     #     if form.validate_on_submit():
+# #     #         user_email = request.form['email']
 
-
-@auth.route("/admin/books", methods= ['GET','POST'])
-@login_required
-def admin_books():
-    form = BookForm()
-    pubs  = Publication.query.all()
-    pub_form = [(pb.id, pb.name) for pb in pubs ]
-    form.publisher.choices = pub_form
-
-    return render_template("book_add.html" , form = form)
+    
+#     return render_template("confirm_email.html" , form = form)
 
 
+#  Home page
+@auth.route("/setting")
+def home():
+    books = Books.query.all()
 
+    return render_template("setting.html",books = books)
 
 
 @auth.route("/logout")

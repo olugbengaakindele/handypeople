@@ -9,6 +9,6 @@ if __name__ =="__main__":
         db.create_all()
 
         if not Users.query.filter_by(email = "akin@gmail.com").first():
-            Users.create_user("Olugbenga","akin@gmail.com", "secret")
+            Users.create_user("Olugbenga","akin@gmail.com", "secret", 'CYTP')
 
     flask_app.run(debug=True)

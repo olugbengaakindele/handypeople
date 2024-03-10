@@ -4,16 +4,17 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_mail import Mail,Message
+from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
 
-
-
+mail = Mail()
+sr = URLSafeTimedSerializer(os.environ['e_data_password'])
 login_manager = LoginManager()
 login_manager.login_view = "auth.do_the_login"
 login_manager.session_protection= "strong"
 bcrypt = Bcrypt()
 db = SQLAlchemy()
-mail = Mail()
+
 
 def create_app(env):
 
@@ -32,10 +33,7 @@ def create_app(env):
     login_manager.init_app(myapp)
     bcrypt.init_app(myapp)
     mail.init_app(myapp)
-
-
-
-
+   
     return myapp
 
 

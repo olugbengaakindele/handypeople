@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import DateField, SelectField,StringField, SubmitField, PasswordField,EmailField, BooleanField, IntegerField
+from wtforms import TextAreaField,DateField, SelectField,StringField, SubmitField, PasswordField,EmailField, BooleanField, IntegerField
 from wtforms.validators import DataRequired,Email,Length,ValidationError
 from app.auth.models import Users
 
@@ -42,4 +42,26 @@ class BookForm(FlaskForm):
     pub_date = DateField("Publication Date")
     format = SelectField("Book Format", choices=[("Hard cover","Hard cover"),("Papper back","Papper back")])
     publisher = SelectField("Publisher", choices=[])
-    submit  = SubmitField("Submit")
+    submit  = SubmitField("Submit") 
+
+class VerifyEmailForm(FlaskForm):
+    code = StringField("Enter Code", validators=[DataRequired(), Length(5,10)])
+    submit  = SubmitField("Submit") 
+   
+class ProfileEditForm(FlaskForm):
+    primary_trade = TextAreaField("Primary Trade", validators=[DataRequired(), Length(5,100)])
+    about_me = IntegerField("Number of pages",  validators=[DataRequired()])
+    author = StringField("Book Author", validators=[DataRequired(), Length(5,100)])
+    profile_picture = IntegerField("Average Rating (1 - 10)")
+    sex = DateField("Publication Date")
+    business_name = SelectField("Book Format", choices=[("Hard cover","Hard cover"),("Papper back","Papper back")])
+    first_name = SelectField("Publisher", choices=[])
+    last_name  = SubmitField("Submit") 
+    city = StringField("Book Author", validators=[DataRequired(), Length(5,100)])
+    province = IntegerField("Average Rating (1 - 10)")
+    stree_address = DateField("Publication Date")
+    postal_code = SelectField("Book Format", choices=[("Hard cover","Hard cover"),("Papper back","Papper back")])
+    phone_number= SelectField("Publisher", choices=[])
+    business_license_number  = SubmitField("Submit") 
+    more_notes_about_me = IntegerField("Number of pages",  validators=[DataRequired()])
+   
