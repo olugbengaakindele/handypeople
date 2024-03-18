@@ -109,10 +109,12 @@ def do_the_login():
 
 #  Home page
 @auth.route("/setting")
-def home():
-    books = Books.query.all()
-
-    return render_template("setting.html",books = books)
+def setting():
+    form = ProfileEditForm()
+    user_id_value = Users.query.filter_by(id = current_user.id).first()
+    profile = Users.query.filter_by(user_id -user_id_value )
+    
+    return render_template("setting.html", form = form, profile = profile)
 
 
 @auth.route("/logout")

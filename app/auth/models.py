@@ -44,7 +44,7 @@ class Profiles(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     primary_trade = db.Column(db.String(100), nullable = False)
     about_me = db.Column(db.String(1000), nullable = False)
-    profile_picture = db.Column(db.String(100))
+    profile_picture = db.Column(db.String(100), default ='default.jpeg')
     sex = db.Column(db.String(100),nullable =False)
     business_name = db.Column(db.String(100))
     first_name = db.Column(db.String(100))
@@ -53,15 +53,14 @@ class Profiles(UserMixin, db.Model):
     city = db.Column(db.String(50))
     street_address = db.Column(db.String(50))
     postal_code = db.Column(db.String(50))
-    email_address =  db.Column(db.String(50))
     phone_number_1 = db.Column(db.String(50))
     business_license_number = db.Column(db.String(50))
     more_notes_about_me = db.Column(db.String(50))
-    userd_id = db.Column(db.Integer, db.ForeignKey('tbl_users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('tbl_users.id'))
 
     @classmethod
     def create_profile(cls, pri_trade,abt_me, profile_picture ,sex, biz_name, f_name,l_name, prov, city, str_add,
-                       ps_code, em_add, ph_num1,ph_num2,biz_lic_num, more_notes,user_id):
+                       ps_code,  ph_num1,biz_lic_num, more_notes,user_id):
         
         user_profile = cls(
                             primary_trade = pri_trade,
@@ -74,10 +73,8 @@ class Profiles(UserMixin, db.Model):
                             province = prov, 
                             city =city, 
                             street_address = str_add,
-                            paostal_code = ps_code, 
-                            emial_address = em_add, 
+                            postal_code = ps_code, 
                             phone_number_1 =ph_num1,
-                            phone_number_2 = ph_num2,
                             business_license_number= biz_lic_num, 
                             more_notes_about_me = more_notes,
                             user_id = user_id
