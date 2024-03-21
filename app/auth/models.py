@@ -97,6 +97,20 @@ class Profiles(UserMixin, db.Model):
         return user
 
 
+def SaveProfilePicture(picture, email):
+
+    _,f_ext = os.path.splitext(picture)
+    filename = f'{email}.{f_ext}' 
+    file_path = os.path.join(app.instance_path,'static/profile_image', filename) 
+    picture.save(file_path)
+
+    return filename
+
+
+
+
+
+
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(int(id))

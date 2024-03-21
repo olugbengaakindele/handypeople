@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField,DateField, SelectField,StringField, SubmitField, PasswordField,EmailField, BooleanField, IntegerField
+from wtforms import  FileField,TextAreaField,DateField, SelectField,StringField, SubmitField, PasswordField,EmailField, BooleanField, IntegerField
 from wtforms.validators import DataRequired,Email,Length,ValidationError
 from app.auth.models import Users
+from flask_wtf.file import FileField, FileAllowed
 
 
 def email_check_for_reg(form,field):
@@ -64,4 +65,13 @@ class ProfileEditForm(FlaskForm):
     phone_number= SelectField("Publisher", choices=[])
     business_license_number  = SubmitField("Submit") 
     more_notes_about_me = IntegerField("Number of pages",  validators=[DataRequired()])
-   
+
+class BasicProfileForm(FlaskForm):
+    name = StringField("Your Preferred Name")
+    email = EmailField("What is your email", validators=[DataRequired(), Length(5,100),Email(),email_check_for_reg])
+    sex = StringField("Your Sex")
+    trade = StringField("Your Primary Trade")
+    picture= FileField("Update Profile Picture", validators=[FileAllowed(['jpg','png','svg'])] )
+    submit  = SubmitField("Update info") 
+
+

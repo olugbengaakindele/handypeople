@@ -12,7 +12,7 @@
     {% if title %}
         <title>Book Store -- {{ title }}</title>
     {% else %}
-        <title>Book Store</title>
+        <title>Journey Man</title>
     {% endif %}
 
   </head>
@@ -40,25 +40,10 @@
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="{{url_for('auth.register')}}">Register</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{url_for('auth.do_the_login')}}">Login</a></li>
-                        {% endif %}   
-                        
-                        <!-- {% if current_user.email== "akin@gmail.com"  %}
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle opacity-100" data-bs-toggle="dropdown">
-                                    Admi
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url_for('auth.admin_publisher')}}">Publisher</a></li>
-                                    <li><a class="dropdown-item" href="{{url_for('auth.admin_books')}}">Book</a></li>
-                                </ul>
-                            </div>       
-                        {% endif %}  -->
+                        {% endif %}                      
                         
                     </ul>
-
-
-                </div>
-               
+                </div>              
             </div>          
         </div>
     </nav>

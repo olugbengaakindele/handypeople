@@ -2,10 +2,10 @@
 from app.auth.forms import *
 from app.auth import auth
 from flask import render_template, request, flash, redirect, url_for
-from app.auth.models import Users,Profiles
+from app.auth.models import Users,Profiles, SaveProfilePicture
 from app.catlog.models import Books
 from app.catlog.models import Publication
-from app import bcrypt, sr
+from app import bcrypt, sr, db
 from flask_login import  login_user, logout_user,login_required, current_user
 from flask_mail import  Message
 from app import mail
@@ -63,8 +63,8 @@ def register():
     
 
 @auth.route("/login", methods= ['GET','POST'])
-def do_the_login():
-    
+
+def do_the_login():    
     name = None
     email = None
     form = LoginForm()
@@ -112,10 +112,27 @@ def do_the_login():
 def setting():
     form = ProfileEditForm()
     user_id_value = Users.query.filter_by(id = current_user.id).first()
-    profile = Users.query.filter_by(user_id -user_id_value )
+    profile = Profiles.query.filter_by(user_id= user_id_value.id ).first()
     
     return render_template("setting.html", form = form, profile = profile)
 
+@auth.route("/setting/edit_basic", methods=['GET',"POST"])
+def edit_basic():
+    form = BasicProfileForm()
+    profile = Profiles.query.filter_by(user_id=current_user.id ).first()
+    if form.validate_on_submit():
+        if form.picture.data:
+            filename = SaveProfilePicture(form.picture.data, current_user.email)
+            print(filename)
+            profile.profile_picture = filename
+            db.session.commit()
+
+        current_user.email = form.email.data
+        current_user.name = form.name.data
+        db.session.commit()
+
+
+    return render_template("edit_basic_info.html", form = form, profile = profile)
 
 @auth.route("/logout")
 @login_required
@@ -123,3 +140,9 @@ def logout():
     logout_user()
 
     return redirect(url_for("auth.home"))
+
+@auth.route("/publishers")
+def admin_publisher():
+    books = Books.query.all()
+
+    return render_template("home.html",books = books)
