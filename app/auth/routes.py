@@ -14,8 +14,6 @@ from itsdangerous import URLSafeTimedSerializer
 import os
 from app.auth.bespokeFunc import *
 
-
-
 #  Home page
 @auth.route("/home")
 def home():
@@ -37,8 +35,13 @@ def register():
         email = form.email.data
         password = form.password.data
         code_sent = get_random_string(5)
-        Users.create_user( name ,email,  password, code_sent,)
+        Users.create_user( name ,email,  password, code_sent)
+        # get user_id so as to create a blank record in profile 
+        user_id = Users.query.filter_by(email = email).first().id
+        #  create a blank profile info, so that the edit profile 
+        Profiles.create_profile('-','-','default.jpg','-','-','-','-','-','-','-','-','-','-','-',user_id)
 
+        
         # generate token to send to email
         # sr = URLSafeTimedSerializer(os.environ['e_data_password'])
         # token = sr.dumps(email , salt = 'email_confirm')
@@ -108,7 +111,8 @@ def do_the_login():
 
 
 #  Home page
-@auth.route("/setting")
+@auth.route("/setting", methods=['GET','POST'] )
+@login_required
 def setting():
     form = ProfileEditForm()
     user_id_value = Users.query.filter_by(id = current_user.id).first()
@@ -116,23 +120,42 @@ def setting():
     
     return render_template("setting.html", form = form, profile = profile)
 
-@auth.route("/setting/edit_basic", methods=['GET',"POST"])
+@auth.route("/setting/edit_basic", methods=['GET','POST'] )
+@login_required
 def edit_basic():
     form = BasicProfileForm()
     profile = Profiles.query.filter_by(user_id=current_user.id ).first()
     if form.validate_on_submit():
         if form.picture.data:
             filename = SaveProfilePicture(form.picture.data, current_user.email)
-            print(filename)
             profile.profile_picture = filename
             db.session.commit()
-
-        current_user.email = form.email.data
         current_user.name = form.name.data
         db.session.commit()
+        return redirect(url_for("auth.setting"))
 
 
     return render_template("edit_basic_info.html", form = form, profile = profile)
+
+
+@auth.route("/setting/edit_contact_info", methods=['GET','POST'] )
+@login_required
+def edit_contact_info():
+    form = ContactProfileForm()
+    profile = Profiles.query.filter_by(user_id = current_user.id ).first()
+    if form.validate_on_submit():
+        
+        profile.province = form.province.data
+        profile.city = form.city.data
+        profile.street_address = form.address.data
+        profile.mobile = form.mobile.data
+        profile.business_license_number = form.bizlic.data
+      
+        db.session.commit()
+        return redirect(url_for("auth.setting"))
+
+
+    return render_template("edit_contact_info.html", form = form, profile = profile)
 
 @auth.route("/logout")
 @login_required

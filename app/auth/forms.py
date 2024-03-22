@@ -68,10 +68,19 @@ class ProfileEditForm(FlaskForm):
 
 class BasicProfileForm(FlaskForm):
     name = StringField("Your Preferred Name")
-    email = EmailField("What is your email", validators=[DataRequired(), Length(5,100),Email(),email_check_for_reg])
     sex = StringField("Your Sex")
     trade = StringField("Your Primary Trade")
     picture= FileField("Update Profile Picture", validators=[FileAllowed(['jpg','png','svg'])] )
     submit  = SubmitField("Update info") 
 
 
+class ContactProfileForm(FlaskForm):
+    # province = SelectField("Province", choices=[("Hard cover","Hard cover"),("Papper back","Papper back")])
+    province = StringField("Province")
+    city = StringField("City")
+    address = StringField("Address")
+    mobile = StringField("Mobile")
+    bizlic = StringField("Business License")
+    submit  = SubmitField("Update info") 
+
+    

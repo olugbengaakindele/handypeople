@@ -24,23 +24,42 @@
         <div class="card-body">
           <div class="container">
           <div class="row">
-            <h6  class="lead fs-3">Basic Info</h6>
+            <h6  class="lead fs-3">Contact Info</h6>
             <hr>
             <div class="col-md-3">
-              <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-75 h-50" alt="...">
+              <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-75 h-25" alt="...">
             </div>
             <div class="col-md-8">  
-              <form action="{{url_for('auth.edit_basic')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
+              <form action="{{url_for('auth.edit_contact_info')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
                {{ form.hidden_tag() }}
             
                 <div class="form-group">
-                  {{form.name.label}}
-                  {{form.name(class="form-control", value = current_user.name) }}  
+                  {{form.province.label}}
+                  {{form.province(class="form-control", value = profile.province) }}  
                 </div>  
                 <br>
                 <div class="form-group">
-                  {{form.picture.label}}
-                  {{form.picture (class="form-control") }}      
+                  {{form.city.label}}
+                  {{form.city (class="form-control", value = profile.city) }}      
+                </div> 
+                <br>
+
+
+                <div class="form-group">
+                  {{form.address.label}}
+                  {{form.address (class="form-control", value = profile.street_address) }}      
+                </div> 
+                <br>
+
+                <div class="form-group">
+                  {{form.mobile.label}}
+                  {{form.mobile (class="form-control", value = profile.mobile) }}      
+                </div> 
+                <br>
+
+                <div class="form-group">
+                  {{form.bizlic.label}}
+                  {{form.bizlic(class="form-control", value = profile.business_license_number) }}      
                 </div> 
                 <br>
                 <div class="form-group">

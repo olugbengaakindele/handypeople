@@ -12,10 +12,10 @@
       <!-- this is for the menu -->
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Basic Info.</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Change Contact Info.</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_contact_info')}}"><button type="button" class="btn btn-light btn-sm">Change Contact Info.</button></a></li>
         <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit About Me</button></a></li>
         <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Tags</button></a></li>
-        
+        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Login Info.</button></a></li>
       </ul>
     </div>  
     <div class="col-md-3 border-left">
@@ -32,7 +32,6 @@
               </div>
               <div class="col-md-8">
                 <h6 class="card-text ms-auto lead fs-6 ">Name: <span class="text-dark fs-6">{{current_user.name.title() }}</span></h6>
-                <h6 class="card-text ms-auto lead fs-6 ">Email: <span class="text-dark fs-6">{{current_user.email }}</span></h6>                
                 <h6 class="card-text ms-auto lead fs-6 ">Sex: <span class="text-dark fs-6">{{profile.sex }}</span></h6>
                 <h6 class="card-text ms-auto lead fs-6 ">Trade: <span class="text-dark fs-6">{{profile.primary_trade }}</span></h6>
               </div>  
@@ -60,7 +59,7 @@
               <hr>
               <div class="col-md-12">
                 <h6 class="card-text ms-auto lead fs-6 ">About me: <span class="text-dark fs-6"></span>{{profile.about_me }}</h6>                
-                <h6 class="card-text ms-auto lead fs-6 ">Sex: <span class="text-dark fs-6"></span>{{profile.more_notes_about_me }}</h6>  
+                <h6 class="card-text ms-auto lead fs-6 ">Notes: <span class="text-dark fs-6"></span>{{profile.more_notes_about_me }}</h6>  
               </div>  
             </div>
             <br>
@@ -70,8 +69,7 @@
               <h6  class="lead fs-3">Tags</h6>
               <hr>
               <div class="col-md-12">
-                <h6 class="card-text ms-auto lead fs-6 ">About me: <span class="text-dark fs-6"></span>{{profile.about_me }}</h6>                
-                <h6 class="card-text ms-auto lead fs-6 ">Sex: <span class="text-dark fs-6"></span>{{profile.more_notes_about_me }}</h6>  
+                 <h6 class="card-text ms-auto lead fs-6 ">Electrician, Basement Development, Plumbing, Capentry</h6>  
               </div>  
             </div>
 
@@ -79,11 +77,11 @@
             <br>
           
             <div class="row">
-              <h6  class="lead fs-3">Password</h6>
+              <h6  class="lead fs-3">Login</h6>
               <hr>
               <div class="col-md-12">
-                <h6 class="card-text ms-auto lead fs-6 ">About me: <span class="text-dark fs-6"></span>{{profile.about_me }}</h6>                
-                <h6 class="card-text ms-auto lead fs-6 ">More about you: <span class="text-dark fs-6"></span>{{profile.more_notes_about_me }}</h6>  
+                <h6 class="card-text ms-auto lead fs-6 ">Email: <span class="text-dark fs-6"></span>{{current_user.email}}</h6>                
+                <h6 class="card-text ms-auto lead fs-6 ">Password: <span class="text-dark fs-6"></span>********</h6>  
               </div>  
             </div>
 

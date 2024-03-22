@@ -4,7 +4,6 @@ from app import login_manager
 from flask_login import UserMixin
 import os
 
-
 class Users(UserMixin, db.Model):
     __tablename__ = 'tbl_users'
 
@@ -42,10 +41,10 @@ class Profiles(UserMixin, db.Model):
     __tablename__ = 'tbl_profiles'
 
     id = db.Column(db.Integer, primary_key = True)
-    primary_trade = db.Column(db.String(100), nullable = False)
-    about_me = db.Column(db.String(1000), nullable = False)
+    primary_trade = db.Column(db.String(100))
+    about_me = db.Column(db.String(1000))
     profile_picture = db.Column(db.String(100), default ='default.jpeg')
-    sex = db.Column(db.String(100),nullable =False)
+    sex = db.Column(db.String(100))
     business_name = db.Column(db.String(100))
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
@@ -99,16 +98,15 @@ class Profiles(UserMixin, db.Model):
 
 def SaveProfilePicture(picture, email):
 
-    _,f_ext = os.path.splitext(picture)
-    filename = f'{email}.{f_ext}' 
-    file_path = os.path.join(app.instance_path,'static/profile_image', filename) 
+    _,f_ext = os.path.splitext(picture.filename)
+    filename = f'{email}{f_ext}' 
+    current_dir = os.getcwd()
+    # app_folder = os.path.abspath(os.path.join(current_dir, os.pardir))
+    app_folder = os.path.join(os.getcwd(),'app','static', 'profile_image')
+    file_path = os.path.join(app_folder, filename) 
     picture.save(file_path)
 
     return filename
-
-
-
-
 
 
 @login_manager.user_loader
