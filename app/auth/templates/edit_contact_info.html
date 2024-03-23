@@ -1,23 +1,8 @@
-{% extends "layout.html" %}
+{% extends "setting_layout.html" %}
 
 
+{%block settings_content %}
 
-{% block body %}
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 border-left">
-      <h3 class="h5">Settings</h3>
-      <hr>
-      <!-- this is for the menu -->
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Basic Info.</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_contact_info')}}"><button type="button" class="btn btn-light btn-sm">Change Contact Info.</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit About Me</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Tags</button></a></li>
-        
-      </ul>
-    </div>  
     <div class="col-md-3 border-left">
   
       <div class="card" style="width: 50rem;">
@@ -26,10 +11,8 @@
           <div class="row">
             <h6  class="lead fs-3">Contact Info</h6>
             <hr>
-            <div class="col-md-3">
-              <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-75 h-25" alt="...">
-            </div>
-            <div class="col-md-8">  
+           
+            <div class="col-md">  
               <form action="{{url_for('auth.edit_contact_info')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
                {{ form.hidden_tag() }}
             
@@ -52,8 +35,14 @@
                 <br>
 
                 <div class="form-group">
+                  {{form.post_code.label}}
+                  {{form.post_code (class="form-control", value = profile.postal_code) }}      
+                </div> 
+                <br>
+
+                <div class="form-group">
                   {{form.mobile.label}}
-                  {{form.mobile (class="form-control", value = profile.mobile) }}      
+                  {{form.mobile (class="form-control", value = profile.phone_number_1) }}      
                 </div> 
                 <br>
 
@@ -75,29 +64,4 @@
   </div>
 </div>
 
-
-  <!-- <div class="container">
-    <div class="row justify-content-center">
-      <div class="card b-0" style="width: 40rem;">
-        <h6>Profile Info</h6>
-        <hr>
-        <div class="row">
-          <div class="md-col-6">
-            <img src="{{url_for('static',filename='profile_image/default.jpg')}}" class="card-img-top mx-auto w-50 h-25" alt="...">
-          </div>
-          <div class="md-col-6">
-            <h6>Name: {{current_user.name.title() }}</h6>
-            <h6>Email: {{current_user.email }}</h6>
-            <h6>Sex: {{current_user.sex }}</h6>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Edit Profile</a>
-        </div>
-      </div> 
-    </div>
-  </div>
-   -->
-
-{% endblock body %}
+{% endblock settings_content %}

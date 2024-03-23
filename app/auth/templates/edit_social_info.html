@@ -16,21 +16,31 @@
               <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-75 h-60" alt="...">
             </div>
             <div class="col-md-8">  
-              <form action="{{url_for('auth.edit_basic')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
+              <form action="{{url_for('auth.edit_social_info')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
                {{ form.hidden_tag() }}
             
                 <div class="form-group">
-                  {{form.name.label}}
-                  {{form.name(class="form-control", value = current_user.name) }}  
+                  {{form.instagram.label}}
+                  {{form.instagram(class="form-control", value = profile.instagram) }}  
                 </div>  
                 <br>
                 <div class="form-group">
-                  {{form.picture.label}}
-                  {{form.picture (class="form-control") }}      
+
+                  {{form.facebook.label}}
+                  {{form.facebook (class="form-control" , value = profile.facebook ) }}   
+
                 </div> 
-                <br>
+                <br>   
+
                 <div class="form-group">
-                  <a href="">{{ form.submit(class ='btn btn-primary form-control w-50') }}</a>
+
+                  {{form.twitter.label}}
+                  {{form.twitter (class="form-control" , value = profile.twitter_x ) }}   
+
+                </div> 
+                <br> 
+                <div class="form-group">
+                  <a href="">{{ form.submit(class = 'btn btn-primary form-control w-50' ) }}</a>
                 </div>  
               
               </form>

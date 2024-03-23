@@ -79,8 +79,18 @@ class ContactProfileForm(FlaskForm):
     province = StringField("Province")
     city = StringField("City")
     address = StringField("Address")
+    post_code = StringField("Post Code")
     mobile = StringField("Mobile")
     bizlic = StringField("Business License")
     submit  = SubmitField("Update info") 
 
-    
+class AboutMeProfileForm(FlaskForm):
+    about_me= TextAreaField("About You")
+    more_about_me = TextAreaField("More Details")
+    submit  = SubmitField("Update info") 
+
+class SocialProfileForm(FlaskForm):
+    instagram= StringField("Your Instagram Page")
+    facebook = StringField("Facebook Page")
+    twitter = StringField("Twitter Page")
+    submit  = SubmitField("Update info") 

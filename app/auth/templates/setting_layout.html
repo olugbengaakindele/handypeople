@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 border-left">
+      <h3 class="h5">Settings</h3>
+      <hr>
+      <!-- this is for the menu -->
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Basic Info.</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_contact_info')}}"><button type="button" class="btn btn-light btn-sm">Change Contact Info.</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_aboutme_info')}}"><button type="button" class="btn btn-light btn-sm">Edit About Me</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_social_info')}}"><button type="button" class="btn btn-light btn-sm">Edit Social Media</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Tags</button></a></li>
+        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Login Info.</button></a></li>
+      </ul>
+    </div>  
+    {% block settings_content %}
+
+    {% endblock settings_content %}
+
+  </div>
+
+</div>
+
+{% endblock body%}

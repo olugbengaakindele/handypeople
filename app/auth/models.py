@@ -56,10 +56,15 @@ class Profiles(UserMixin, db.Model):
     business_license_number = db.Column(db.String(50))
     more_notes_about_me = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('tbl_users.id'))
+    tags = db.Column(db.String(1000))
+    instagram = db.Column(db.String(1000))
+    facebook =  db.Column(db.String(1000))
+    twitter_x = db.Column(db.String(1000))
+
 
     @classmethod
     def create_profile(cls, pri_trade,abt_me, profile_picture ,sex, biz_name, f_name,l_name, prov, city, str_add,
-                       ps_code,  ph_num1,biz_lic_num, more_notes,user_id):
+                       ps_code,  ph_num1,biz_lic_num, more_notes,user_id, tags, insta, facebook, twitter):
         
         user_profile = cls(
                             primary_trade = pri_trade,
@@ -76,7 +81,11 @@ class Profiles(UserMixin, db.Model):
                             phone_number_1 =ph_num1,
                             business_license_number= biz_lic_num, 
                             more_notes_about_me = more_notes,
-                            user_id = user_id
+                            user_id = user_id,
+                            tags = tags,
+                            instagram = insta,
+                            facebook = facebook,
+                            twitter_x = twitter
 
         )
 
@@ -94,6 +103,28 @@ class Profiles(UserMixin, db.Model):
         db.session.commit()
 
         return user
+
+class Trades(UserMixin, db.Model):
+    __tablename__ = 'tbl_trades'
+
+    id = db.Column(db.Integer, primary_key = True)
+    trade = db.Column(db.String(250))
+
+    def __init__(self,trade):
+        self.trade = trade
+
+    def _repr__(self):
+        return "trade has been created"
+
+
+    @classmethod
+    def create_trade(cls,trade):
+        trade = cls(trade =trade)
+        
+        db.session.add(trade)
+        db.session.commit()
+
+        return trade
 
 
 def SaveProfilePicture(picture, email):

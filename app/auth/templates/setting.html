@@ -1,23 +1,10 @@
-{% extends "layout.html" %}
+{% extends 'setting_layout.html' %}
 
 
 
-{% block body %}
+{%block settings_content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 border-left">
-      <h3 class="h5">Settings</h3>
-      <hr>
-      <!-- this is for the menu -->
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Basic Info.</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_contact_info')}}"><button type="button" class="btn btn-light btn-sm">Change Contact Info.</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit About Me</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Tags</button></a></li>
-        <li class="list-group-item"><a href="{{url_for('auth.edit_basic')}}"><button type="button" class="btn btn-light btn-sm">Edit Login Info.</button></a></li>
-      </ul>
-    </div>  
+
     <div class="col-md-3 border-left">
   
       <div class="card" style="width: 50rem;">
@@ -31,9 +18,9 @@
                 <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-50 h-100" alt="...">
               </div>
               <div class="col-md-8">
-                <h6 class="card-text ms-auto lead fs-6 ">Name: <span class="text-dark fs-6">{{current_user.name.title() }}</span></h6>
-                <h6 class="card-text ms-auto lead fs-6 ">Sex: <span class="text-dark fs-6">{{profile.sex }}</span></h6>
-                <h6 class="card-text ms-auto lead fs-6 ">Trade: <span class="text-dark fs-6">{{profile.primary_trade }}</span></h6>
+                <h6 class="card-text ms-auto lead fs-5 ">Name: <span class="text-dark fs-6">{{current_user.name.title() }}</span></h6>
+                <h6 class="card-text ms-auto lead fs-5 ">Sex: <span class="text-dark fs-6">{{profile.sex }}</span></h6>
+                <h6 class="card-text ms-auto lead fs-5 ">Trade: <span class="text-dark fs-6">{{profile.primary_trade }}</span></h6>
               </div>  
             </div>
             <br>
@@ -43,13 +30,13 @@
               <h6 class="lead fs-3" >Contact Info</h6>
               <hr>
               <div class="col-md-6">
-                <h6 class="card-text ms-auto lead fs-6">Province: <span class="text-dark fs-6">{{profile.province.title() }}</span> </h6>
-                <h6 class="card-text ms-auto lead fs-6">City: <span class="text-dark fs-6"></span>{{profile.city.title() }}</h6>                
+                <h6 class="card-text ms-auto lead fs-6">Province: <span class="text-dark fs-6">{{profile.province }}</span> </h6>
+                <h6 class="card-text ms-auto lead fs-6">City: <span class="text-dark fs-6"></span>{{profile.city }}</h6>                
                 <h6 class="card-text ms-auto lead fs-6">Address: <span class="text-dark fs-6">{{profile.street_address }}</span></h6>  
               </div>  
               <div class="col-md-6">
-                <h6 class="card-text ms-auto lead fs-6 ">Mobile: <span class="text-dark fs-6"></span>{{profile.phone_number_1.title() }}</h6>
-                <h6 class="card-text ms-auto lead fs-6 ">Business License: <span class="text-dark fs-6"></span>{{profile.email_address }}</h6>                
+                <h6 class="card-text ms-auto lead fs-6 ">Mobile: <span class="text-dark fs-6"></span>{{profile.phone_number_1}}</h6>
+                <h6 class="card-text ms-auto lead fs-6 ">Business License: <span class="text-dark fs-6"></span>{{profile.business_license_number }}</h6>                
               </div> 
             </div>
             <br>
@@ -63,7 +50,6 @@
               </div>  
             </div>
             <br>
-
             <!--Tags section -->
             <div class="row">
               <h6  class="lead fs-3">Tags</h6>
@@ -72,10 +58,20 @@
                  <h6 class="card-text ms-auto lead fs-6 ">Electrician, Basement Development, Plumbing, Capentry</h6>  
               </div>  
             </div>
+            <br>   
+            <!-- Social Media  -->       
+            <div class="row">
+              <h6  class="lead fs-3">Social Media Info.</h6>
+              <hr>
+              <div class="col-md-12">
+                <h6 class="card-text ms-auto lead fs-6 ">Instagram: <span class="text-dark fs-6 stretched-link"></span>{{profile.instagram}}</h6>                
+                <h6 class="card-text ms-auto lead fs-6 ">Facebook: <span class="text-dark fs-6 stretched-link"></span>{{profile.facebook}}</h6>  
+                <h6 class="card-text ms-auto lead fs-6 ">Twitter: <span class="text-dark fs-6 stretched-link"></span>{{profile.twitter_x}}</h6>  
+              </div>  
+            </div>
 
             <!--Password section -->
-            <br>
-          
+            <br>          
             <div class="row">
               <h6  class="lead fs-3">Login</h6>
               <hr>
@@ -86,37 +82,11 @@
             </div>
 
 
+
           </div>
         </div> 
       </div>
     </div>
       <!-- this is for the side navigation where profile picture will seat -->
-  </div>
-</div>
 
-
-  <!-- <div class="container">
-    <div class="row justify-content-center">
-      <div class="card b-0" style="width: 40rem;">
-        <h6>Profile Info</h6>
-        <hr>
-        <div class="row">
-          <div class="md-col-6">
-            <img src="{{url_for('static',filename='profile_image/default.jpg')}}" class="card-img-top mx-auto w-50 h-25" alt="...">
-          </div>
-          <div class="md-col-6">
-            <h6>Name: {{current_user.name.title() }}</h6>
-            <h6>Email: {{current_user.email }}</h6>
-            <h6>Sex: {{current_user.sex }}</h6>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Edit Profile</a>
-        </div>
-      </div> 
-    </div>
-  </div>
-   -->
-
-{% endblock body %}
+{% endblock %}

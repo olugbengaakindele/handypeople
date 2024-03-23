@@ -39,7 +39,8 @@ def register():
         # get user_id so as to create a blank record in profile 
         user_id = Users.query.filter_by(email = email).first().id
         #  create a blank profile info, so that the edit profile 
-        Profiles.create_profile('-','-','default.jpg','-','-','-','-','-','-','-','-','-','-','-',user_id)
+        Profiles.create_profile('-','-','default.jpg','-','-','-','-','-','-','-','-','-','-'
+                                ,'-',user_id,'-','-','-','-')
 
         
         # generate token to send to email
@@ -148,7 +149,7 @@ def edit_contact_info():
         profile.province = form.province.data
         profile.city = form.city.data
         profile.street_address = form.address.data
-        profile.mobile = form.mobile.data
+        profile.phone_number_1 = form.mobile.data
         profile.business_license_number = form.bizlic.data
       
         db.session.commit()
@@ -156,6 +157,45 @@ def edit_contact_info():
 
 
     return render_template("edit_contact_info.html", form = form, profile = profile)
+
+@auth.route("/setting/edit_about_me", methods=['GET','POST'] )
+@login_required
+def edit_aboutme_info():
+    form = AboutMeProfileForm()
+    profile = Profiles.query.filter_by(user_id = current_user.id ).first()
+    form.about_me.data = profile.about_me
+    form.more_about_me.data = profile.more_notes_about_me    
+      
+    if form.validate_on_submit():
+        
+        profile.about_me = form.about_me.data
+        profile.more_notes_about_me = form.more_about_me.data       
+      
+        db.session.commit()
+        return redirect(url_for("auth.setting"))
+
+
+    return render_template("edit_aboutme_info.html", form = form, profile = profile)
+
+
+@auth.route("/setting/edit_social_me", methods=['GET','POST'] )
+@login_required
+def edit_social_info():
+    form = SocialProfileForm()
+    profile = Profiles.query.filter_by(user_id = current_user.id ).first()
+   
+    if form.validate_on_submit():
+        
+        profile.instagram = form.instagram.data
+        profile.facebook = form.facebook.data       
+        profile.twitter_x = form.twitter.data 
+
+        db.session.commit()
+        return redirect(url_for("auth.setting"))
+
+
+    return render_template("edit_social_info.html", form = form, profile = profile)
+
 
 @auth.route("/logout")
 @login_required
