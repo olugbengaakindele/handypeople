@@ -12,22 +12,21 @@
           <div class="row">
             <h6  class="lead fs-3">Basic Info</h6>
             <hr>
-            <div class="col-md-3">
-              <img src="{{url_for('static',filename='profile_image/')}}{{profile.profile_picture}}" class="card-img-top rounded mx-auto w-75 h-60" alt="...">
-            </div>
+           
             <div class="col-md-8">  
-              <form action="{{url_for('auth.edit_social_info')}}" method = "post" class ="w-75 mx-auto" enctype="multipart/form-data">
+              <h6>User : {{id}}</h6>
+              <form action="{{url_for('auth.edit_social_info')}}" method = "post" class ="w-75 mx-auto" >
                {{ form.hidden_tag() }}
             
                 <div class="form-group">
                   {{form.instagram.label}}
-                  {{form.instagram(class="form-control", value = profile.instagram) }}  
+                  {{form.instagram(class="form-control") }}  
                 </div>  
                 <br>
                 <div class="form-group">
 
                   {{form.facebook.label}}
-                  {{form.facebook (class="form-control" , value = profile.facebook ) }}   
+                  {{form.facebook (class="form-control") }}   
 
                 </div> 
                 <br>   
@@ -35,12 +34,12 @@
                 <div class="form-group">
 
                   {{form.twitter.label}}
-                  {{form.twitter (class="form-control" , value = profile.twitter_x ) }}   
+                  {{form.twitter (class="form-control") }}   
 
                 </div> 
                 <br> 
                 <div class="form-group">
-                  <a href="">{{ form.submit(class = 'btn btn-primary form-control w-50' ) }}</a>
+                  <a href="">{{ form.submit(class = 'btn btn-primary form-control w-50') }}</a>
                 </div>  
               
               </form>

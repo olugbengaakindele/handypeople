@@ -2,7 +2,7 @@
 from app.auth.forms import *
 from app.auth import auth
 from flask import render_template, request, flash, redirect, url_for
-from app.auth.models import Users,Profiles, SaveProfilePicture
+from app.auth.models import Users,Profiles, SaveProfilePicture,Trades
 from app.catlog.models import Books
 from app.catlog.models import Publication
 from app import bcrypt, sr, db
@@ -40,7 +40,7 @@ def register():
         user_id = Users.query.filter_by(email = email).first().id
         #  create a blank profile info, so that the edit profile 
         Profiles.create_profile('-','-','default.jpg','-','-','-','-','-','-','-','-','-','-'
-                                ,'-',user_id,'-','-','-','-')
+                                ,'-',user_id,'-','-','-','-','-','-','-','-')
 
         
         # generate token to send to email
@@ -116,8 +116,7 @@ def do_the_login():
 @login_required
 def setting():
     form = ProfileEditForm()
-    user_id_value = Users.query.filter_by(id = current_user.id).first()
-    profile = Profiles.query.filter_by(user_id= user_id_value.id ).first()
+    profile = Profiles.query.filter_by(user_id= current_user.id).first()
     
     return render_template("setting.html", form = form, profile = profile)
 
@@ -167,9 +166,9 @@ def edit_aboutme_info():
     form.more_about_me.data = profile.more_notes_about_me    
       
     if form.validate_on_submit():
-        
-        profile.about_me = form.about_me.data
-        profile.more_notes_about_me = form.more_about_me.data       
+        print([form.about_me.data, form.more_about_me.data   ])
+        profile.about_me = request.form.get('about_me')
+        profile.more_notes_about_me = request.form.get('more_about_me')       
       
         db.session.commit()
         return redirect(url_for("auth.setting"))
@@ -178,24 +177,50 @@ def edit_aboutme_info():
     return render_template("edit_aboutme_info.html", form = form, profile = profile)
 
 
-@auth.route("/setting/edit_social_me", methods=['GET','POST'] )
+@auth.route("/setting/edit_social_info", methods=['GET','POST'] )
 @login_required
 def edit_social_info():
     form = SocialProfileForm()
     profile = Profiles.query.filter_by(user_id = current_user.id ).first()
-   
+    form.instagram.data = profile.instagram
+    form.facebook.data =   profile.facebook    
+    form.twitter.data  = profile.twitter_x 
     if form.validate_on_submit():
         
-        profile.instagram = form.instagram.data
-        profile.facebook = form.facebook.data       
-        profile.twitter_x = form.twitter.data 
+        profile.instagram = request.form.get('instagram')
+        profile.facebook = request.form.get('facebook')
+        profile.twitter_x = request.form.get('twitter')
 
         db.session.commit()
         return redirect(url_for("auth.setting"))
 
 
-    return render_template("edit_social_info.html", form = form, profile = profile)
+    return render_template("edit_social_info.html", form = form, profile = profile, id = profile.city)
 
+
+@auth.route("/setting/edit_tags", methods=['GET','POST'] )
+@login_required
+def edit_tags():
+    form = TagsProfileForm()
+    profile = Profiles.query.filter_by(user_id = current_user.id ).first()
+    form.tag_1.choices = [(row.trade, row.trade) for row in Trades.query.all()]
+    form.tag_2.choices = [(row.trade, row.trade) for row in Trades.query.all()]
+    form.tag_3.choices = [(row.trade, row.trade) for row in Trades.query.all()]
+    form.tag_4.choices = [(row.trade, row.trade) for row in Trades.query.all()]
+    form.tag_5.choices = [(row.trade, row.trade) for row in Trades.query.all()]
+
+    if form.validate_on_submit():   
+        print([form.tag_1.data, form.tag_3.data])     
+        profile.tags = form.tag_1.data
+        profile.tags_2 = form.tag_2.data       
+        profile.tags_3 = form.tag_3.data 
+        profile.tags_4 = form.tag_4.data 
+        profile.tags_5 = form.tag_5.data 
+
+        db.session.commit()
+        return redirect(url_for("auth.setting"))
+
+    return render_template("edit_tags.html", form = form, profile = profile)
 
 @auth.route("/logout")
 @login_required

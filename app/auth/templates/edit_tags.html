@@ -1,0 +1,59 @@
+{% extends "setting_layout.html" %}
+
+
+
+{%block settings_content %}
+
+    <div class="col-md-3 border-left">
+  
+      <div class="card" style="width: 50rem;">
+        <div class="card-body">
+          <div class="container">
+          <div class="row">
+            <h6  class="lead fs-3">Tags Info</h6>
+            <hr>
+            
+            <div class="col-md-8">  
+              <form action="{{url_for('auth.edit_tags')}}" method = "post" class ="w-75 mx-auto" >
+               {{ form.hidden_tag() }}
+            
+                <div class="form-group">
+                  {{form.tag_1.label}}
+                  {{form.tag_1(class="form-control", value = profile.tag) }}  
+                </div>  
+                <br>
+                <div class="form-group">
+                  {{form.tag_2.label}}
+                  {{form.tag_2 (class="form-control" ) }}   
+                </div> 
+                <br>   
+                <div class="form-group">
+                  {{form.tag_3.label}}
+                  {{form.tag_3 (class="form-control"  ) }}   
+                </div> 
+                <br>   
+                <div class="form-group">
+                  {{form.tag_4.label}}
+                  {{form.tag_4 (class="form-control" ) }}   
+                </div> 
+                <br>   
+                <div class="form-group">
+                  {{form.tag_5.label}}
+                  {{form.tag_5 (class="form-control"  ) }}   
+                </div> 
+                <br>   
+                <div class="form-group">
+                  <a href="">{{ form.submit(class = 'btn btn-primary form-control w-50' ) }}</a>
+                </div>  
+              
+              </form>
+            </div>
+        </div> 
+      </div>
+    </div>
+      <!-- this is for the side navigation where profile picture will seat -->
+  </div>
+</div>
+
+{% endblock settings_content %}
+

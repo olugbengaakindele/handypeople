@@ -56,15 +56,19 @@ class Profiles(UserMixin, db.Model):
     business_license_number = db.Column(db.String(50))
     more_notes_about_me = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('tbl_users.id'))
-    tags = db.Column(db.String(1000))
-    instagram = db.Column(db.String(1000))
-    facebook =  db.Column(db.String(1000))
-    twitter_x = db.Column(db.String(1000))
+    tags = db.Column(db.String(100))
+    instagram = db.Column(db.String(100))
+    facebook =  db.Column(db.String(100))
+    twitter_x = db.Column(db.String(100))
+    tags_2= db.Column(db.String(100))
+    tags_3 = db.Column(db.String(100))
+    tags_4 = db.Column(db.String(100))
+    tags_5 = db.Column(db.String(100))
 
 
     @classmethod
     def create_profile(cls, pri_trade,abt_me, profile_picture ,sex, biz_name, f_name,l_name, prov, city, str_add,
-                       ps_code,  ph_num1,biz_lic_num, more_notes,user_id, tags, insta, facebook, twitter):
+                       ps_code,  ph_num1,biz_lic_num, more_notes,user_id, tags, insta, facebook, twitter, tag_2,tag_3,tag_4,tag_5):
         
         user_profile = cls(
                             primary_trade = pri_trade,
@@ -85,7 +89,11 @@ class Profiles(UserMixin, db.Model):
                             tags = tags,
                             instagram = insta,
                             facebook = facebook,
-                            twitter_x = twitter
+                            twitter_x = twitter,
+                            tags_2 = tag_2,
+                            tags_3 = tag_3,
+                            tags_4 = tag_4,
+                            tags_5 = tag_5
 
         )
 
@@ -94,15 +102,6 @@ class Profiles(UserMixin, db.Model):
 
         return user_profile
 
-
-    @classmethod
-    def create_user(cls,user_name, user_email, user_password):
-        user = cls(name = user_name, email= user_email.lower(), password = bcrypt.generate_password_hash(user_password).decode('utf-8'))
-        
-        db.session.add(user)
-        db.session.commit()
-
-        return user
 
 class Trades(UserMixin, db.Model):
     __tablename__ = 'tbl_trades'

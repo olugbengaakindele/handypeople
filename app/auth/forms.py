@@ -90,7 +90,16 @@ class AboutMeProfileForm(FlaskForm):
     submit  = SubmitField("Update info") 
 
 class SocialProfileForm(FlaskForm):
-    instagram= StringField("Your Instagram Page")
+    instagram = StringField("Your Instagram Page")
     facebook = StringField("Facebook Page")
     twitter = StringField("Twitter Page")
+    submit  = SubmitField("Update info") 
+
+
+class TagsProfileForm(FlaskForm):
+    tag_1= SelectField("Tag 1")
+    tag_2 = SelectField("Tag 2")
+    tag_3 = SelectField("Tag 3")
+    tag_4 = SelectField("Tag 4")
+    tag_5 = SelectField("Tag 5")
     submit  = SubmitField("Update info") 

@@ -14,7 +14,7 @@ if __name__ =="__main__":
 
         if not Profiles.query.filter_by(id = 1).first():
             Profiles.create_profile(
-                'Electrician', 'I am an eletrician','default.jpg','M','APT Electricity','Olu','Femikau','Ontario','Oshawa','902 King street','L4B3Ty','4025897988','T76YUH77787','When you create a professional profile.',1,'-','-','-' ,'-'
+                'Electrician', 'I am an eletrician','default.jpg','M','APT Electricity','Olu','Femikau','Ontario','Oshawa','902 King street','L4B3Ty','4025897988','T76YUH77787','When you create a professional profile.',1,'-','-','-' ,'-','-','-','-' ,'-'
             )
 
         if not Trades.query.filter_by(id = 1).first():
